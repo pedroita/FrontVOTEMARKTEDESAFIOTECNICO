@@ -11,7 +11,7 @@ const VoteForm = () => {
         service: 0,
         prices: 0,
         marketId: '',
-        clientId: ''
+        clientId: ''  // Mantenha como string para o controle do input
     });
     const [selectedMarketImage, setSelectedMarketImage] = useState('');
     const [open, setOpen] = useState(false);
@@ -63,13 +63,16 @@ const VoteForm = () => {
             return;
         }
 
+        // Converter clientId para número inteiro antes de enviar
+        const clientIdNumber = parseInt(form.clientId, 10);
+
         fetch('http://localhost:3000/votes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                clientId: form.clientId,
+                clientId: clientIdNumber, // Enviar como inteiro
                 marketId: form.marketId,
                 hygiene: form.hygiene,
                 queues: form.queues,
@@ -121,6 +124,7 @@ const VoteForm = () => {
                             fullWidth
                             margin="normal"
                             variant="outlined"
+                            type="number" // Garante que apenas números possam ser inseridos
                         />
                         <TextField
                             select
